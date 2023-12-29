@@ -1,0 +1,161 @@
+<html>
+
+<head>
+
+  <!-- HTML Meta Tags -->
+  <title>Creation of Form</title>
+  <link rel="stylesheet" href="formCreation.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <script src="alert.js"></script>
+  
+  
+
+
+  <style>
+    body {
+      padding: 15vh 15vw;
+    }
+
+    @media (max-width: 400px) {
+      body {
+        padding: 5vh 5vw;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <form action="#" id="sample">
+    <u><h1 class="form-name">Create Form</h1></u>
+    <h2 class="form-name">Required Attributes</h2>
+    <div id="name" class="form-input-group">
+      <label for="name-input">Name</label>
+      <!--why the weird span? cuz CSS can't be fucking serious http://forums.mozillazine.org/viewtopic.php?f=25&t=291007&start=0&st=0&sksd=a-->
+      <span class="text-input">
+        <input autofocus placeholder="Enter your full name" type="text" name="name" id="name-input" required>
+      </span>
+      <div class="error-text">Your name is required</div>
+    </div>
+
+
+    <div id="email" class="form-input-group">
+      <label for="email-input">Email</label>
+      <span class="text-input">
+        <input placeholder="Enter your email" type="text" name="email" id="email-input" required>
+      </span>
+      <div class="error-text">Email is not valid</div>
+    </div>
+
+    <div id="github" class="form-input-group">
+      <label for="github-input">Residence</label>
+      <span class="text-input">
+        <input placeholder="Enter your address" type="text" name="github" id="github-input" required>
+      </span>
+      <div class="error-text">Try again!</div>
+    </div>
+
+    <div id="mobile" class="form-input-group">
+        <label for="mobile-input">Phone No.</label>
+        <span class="text-input">
+          <input placeholder="Mobile" type="text" name="mobile" id="mobile-input">
+        </span>
+        <div class="error-text">Phone Number should contain number</div>
+      </div>
+
+    <div id="gender" class="form-input-group">
+      <label for="gender-input">Gender</label>
+      <div class="option-group">
+        <input type="radio" name="gender" id="gender-male" value="male">
+        <label for="gender-male">Male</label>
+        <input type="radio" name="gender" id="gender-female" value="female">
+        <label for="gender-female">Female</label>
+      </div>
+      <div class="error-text">Choose a gender</div>
+    </div>
+
+    <hr class="separator">
+
+    <div id="age" class="form-input-group">
+        <label for="age-input">Age</label>
+        <span class="text-input">
+          <input placeholder="Enter your age" type="text" name="age" id="age-input">
+        </span>
+        <div class="error-text">Age should be a number</div>
+      </div>
+
+    <div id="morality" class="form-input-group">
+      <label for="morality-input">Year of Graduation</label>
+      <div class="option-group">
+        <input type="radio" name="morality" id="morality-good" value="good">
+        <label for="morality-good">2025</label>
+        <input type="radio" name="morality" id="morality-evil" value="evil">
+        <label for="morality-evil">2026</label>
+      </div>
+      
+    </div>
+
+    <div id="languages" class="form-input-group">
+      <label for="languages-input">Which community would you like to join?</label>
+      <div class="option-group">
+        <input type="checkbox" name="languages" id="languages-golang" value="golang">
+        <label for="languages-golang">OPTICA</label>
+        <input type="checkbox" name="languages" id="languages-javascript" value="javascript">
+        <label for="languages-javascript">NSS</label>
+        <input type="checkbox" name="languages" id="languages-typescript" value="typescript">
+        <label for="languages-typescript">CICE</label>
+        <input type="checkbox" name="languages" id="languages-kotlin" value="kotlin">
+        <label for="languages-kotlin">CRESCENDO</label>
+      </div>
+      <div class="error-text">Choose at least one community</div>
+    </div>
+
+    <div id="submit" class="form-input-group">
+      <button type="submit">Submit</button>
+    </div>
+
+    <!-- This Part is for Script---------------------------------  -->
+
+  </form>
+  <script type="module">
+    import {init, validateOn, required} from "forms.js"
+    init()
+
+    const validate = validateOn("change", "keyup")
+
+    const requiredFields = ["name", "gender", "morality", "languages"]
+    requiredFields.map(data => validate(data, required(`${data.charAt(0).toUpperCase() + data.slice(1)} is required`)))
+
+    validate("age", required("Age is required"), async value => {
+      if (Number.isNaN(Number(value))) {
+        throw new Error("Age should be a number")
+      }
+    })
+
+    validate("mobile", required("Phone No. is required"), async value => {
+      if (Number.isNaN(Number(value))) {
+        throw new Error("Mobile should contain number")
+      }
+    })
+
+    validate("email", required("Email is required"), async value => {
+      const mailformat = /^[A-Za-z\d\.]+\@[A-Za-z]+\.[a-z]{2,3}$/
+      if (!mailformat.test(value)) {
+        throw new Error("Please enter a valid email")
+      }
+    })
+
+    validate("github", required("Github User Profile Link is required"), async value => {
+      const githubformat = /^[a-zA-Z0-9_-]+$/
+      if (!githubformat.test(value)) {
+        throw new Error("Please enter a valid address.")
+      }
+    })
+  </script>
+</body>
+
+</html>

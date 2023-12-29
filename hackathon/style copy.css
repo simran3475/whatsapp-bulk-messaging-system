@@ -1,0 +1,268 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    background: #353547;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.row{
+    margin-right: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.justify-content-center{
+    display: flex;
+    align-items: center;
+    margin-left: 40px;
+    color: #ffffff;
+}
+
+.imgtext{
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: white;
+    text-shadow: 6px 6px 5px #1E252B;
+    font-family: 'Impact';
+    display: inline-flex; /* keep the background color wrapped tight */
+    padding:4px;font-size:20px;background-color:rgba(95, 62, 26, 0.585);color:#ffffff;
+}
+.footer-copyright{
+    color: #dbe0e6;
+}
+.box{
+    box-shadow: 10px 10px 10px 5px rgba(0,0,0,0.2);
+}
+.container p{
+    display: inline-block;
+    color:#f8f9fa
+    
+    
+}
+.color{
+    color: #ffffff;
+}
+
+
+.centering{
+    text-align: center;
+    text-justify: auto;
+}
+.bottom{
+    margin-bottom: 30px;
+}
+.saying{
+    color: #f8f9fa;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.saying h3{
+    color: #f8f9fa;
+}
+.btn{
+    background-color: #343a40;
+    color:#f8f9fa;
+    border: #343a40;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+.btn:hover{
+    background-color: rgba(56, 42, 42, 0.7);
+    color:#f8f9fa;
+    padding: 10px 30px;
+}
+.btn:focus, .btn:active:focus, .btn.active:focus {
+    outline: 0 none;
+    background-color: #343a40;
+    color: #f8f9fa;
+}
+
+.modal-content{
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+.col-md-9{
+    background-color: #864f9f;
+    color: #f8f9fa;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.image img{
+    width:70px;
+    height:70px;
+    margin-right: 10px;
+}
+.container h2{
+    color:#f8f9fa;
+    text-align: center;
+}
+
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 5px 10px 10px 5px rgba(0,0,0,0.2);
+    border-radius: 10px;
+  }
+  
+.flip-card {
+    background-color: transparent;
+    width:300px;
+    height: 300px;
+    margin-left: 50px;
+    margin-right: 50px;
+    perspective: 1000px;
+} 
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+  
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 10px;
+}
+  
+.flip-card-front {
+    background-color: #dbd9d9;
+    color: #f8f9fa;
+    text-align: center;
+}
+.flip-card-front img{
+    width:300px;
+    height:300px; 
+    border-radius: 10px;
+}
+  
+.flip-card-back {
+    background-color: #f8f9fa;
+    color: #343a40;
+    transform: rotateY(180deg);
+}
+.flip-card-back h3{
+    margin-top:100px;
+}
+.flip-card-back p{
+    display: block;
+    color:#343a40;
+}
+.flip-card-back a{
+    text-decoration: none;
+    background-color: #343a40;
+    color: #f8f9fa;
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+.flip-card-back a:hover{
+    background-color: rgba(49, 37, 37, 0.74);
+    padding: 10px 30px;
+}
+
+.bg-footer{
+    background-color: #1E252B;
+}
+
+img.blur{
+    filter: brightness(0.50);
+}
+.flip-card-front h3{
+    position: absolute;
+    top:120px;
+    transform: translate(-50%,-50%);
+    left:50%;
+}
+
+@keyframes move{
+    0%{
+        transform: translateX(-80%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+}
+
+@media  screen and (max-width:990px) {
+    .navbar-header h3{
+        margin-left:0px;
+    }
+}
+
+.loading {
+    
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: #333940;
+    z-index: -1; 
+    opacity: 0;  
+    
+   
+    animation-delay: 0;
+    animation-name: loading;
+    animation-duration: 1.5s;
+    animation-fill-mode: fowards;
+    animation-iteration-count: 1; 
+    animation-timing-function: ease-out;
+    
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+ 
+  .loading .image {
+    width: auto;
+    height: auto;
+    border-radius: 200px;
+    overflow: hidden;
+    
+    animation: rotation 2s linear infinite; 
+    transform-origin: center; 
+  }
+  
+  .loading .image img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+ 
+  @keyframes loading {
+    from {
+      opacity: 1;
+      z-index: 100;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      z-index: -1;
+    }
+  }
+  
+ 
+  @keyframes rotation {
+    from {
+      transform: rotate(0);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  

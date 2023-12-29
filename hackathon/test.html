@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Webpage</title>
+</head>
+<body>
+    <p>simran</p>
+    <div id="delayedComponentContainer">
+        sardana
+    </div>
+
+    <script>
+        // Wait for the entire page to load
+        window.onload = function() {
+            // Delayed loading of HTML component
+            setTimeout(function() {
+                var delayedComponentContainer = document.getElementById('delayedComponentContainer');
+
+                // Create and append your delayed HTML component
+                var delayedComponent = document.createElement('div');
+                delayedComponent.innerHTML = '<p>This is a delayed component!</p>';
+                
+                delayedComponentContainer.appendChild(delayedComponent);
+            }, 2000); // 2000 milliseconds (2 seconds) delay
+        };
+    </script>
+</body>
+</html>
