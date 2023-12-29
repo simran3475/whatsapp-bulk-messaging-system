@@ -1,7 +1,6 @@
 <html>
 
 <head>
-
   <!-- HTML Meta Tags -->
   <title>Creation of Form</title>
   <link rel="stylesheet" href="formCreation.css">
@@ -12,9 +11,6 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
   <script src="alert.js"></script>
-  
-  
-
 
   <style>
     body {
@@ -31,7 +27,9 @@
 
 <body>
   <form action="#" id="sample">
-    <u><h1 class="form-name">Create Form</h1></u>
+    <u>
+      <h1 class="form-name">Create Form</h1>
+    </u>
     <h2 class="form-name">Required Attributes</h2>
     <div id="name" class="form-input-group">
       <label for="name-input">Name</label>
@@ -60,12 +58,12 @@
     </div>
 
     <div id="mobile" class="form-input-group">
-        <label for="mobile-input">Phone No.</label>
-        <span class="text-input">
-          <input placeholder="Mobile" type="text" name="mobile" id="mobile-input">
-        </span>
-        <div class="error-text">Phone Number should contain number</div>
-      </div>
+      <label for="mobile-input">Phone No.</label>
+      <span class="text-input">
+        <input placeholder="Mobile" type="text" name="mobile" id="mobile-input">
+      </span>
+      <div class="error-text">Phone Number should contain number</div>
+    </div>
 
     <div id="gender" class="form-input-group">
       <label for="gender-input">Gender</label>
@@ -81,12 +79,12 @@
     <hr class="separator">
 
     <div id="age" class="form-input-group">
-        <label for="age-input">Age</label>
-        <span class="text-input">
-          <input placeholder="Enter your age" type="text" name="age" id="age-input">
-        </span>
-        <div class="error-text">Age should be a number</div>
-      </div>
+      <label for="age-input">Age</label>
+      <span class="text-input">
+        <input placeholder="Enter your age" type="text" name="age" id="age-input">
+      </span>
+      <div class="error-text">Age should be a number</div>
+    </div>
 
     <div id="morality" class="form-input-group">
       <label for="morality-input">Year of Graduation</label>
@@ -96,7 +94,7 @@
         <input type="radio" name="morality" id="morality-evil" value="evil">
         <label for="morality-evil">2026</label>
       </div>
-      
+
     </div>
 
     <div id="languages" class="form-input-group">
@@ -122,7 +120,7 @@
 
   </form>
   <script type="module">
-    import {init, validateOn, required} from "forms.js"
+    import { init, validateOn, required } from "forms.js"
     init()
 
     const validate = validateOn("change", "keyup")

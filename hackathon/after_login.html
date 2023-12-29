@@ -1,53 +1,49 @@
-
 <h2>The Process Begins!</h2>
 
 <head>
-    
- <styles>
-    <link rel="stylesheet" href="login.css">
-    <link rel="stylesheet" href="style copy.css">
-    
-</styles>
+	<styles>
+		<link rel="stylesheet" href="login.css">
+		<link rel="stylesheet" href="style copy.css">
 
+	</styles>
 
-<script>
-
-window.onload=function(){
-    const signUpButton = document.getElementById('signUp');
-    const signInButton = document.getElementById('signIn');
-    const container = document.getElementById('container');
-    if(signUpButton){
-        signUpButton.addEventListener('click', () => {
-            container.classList.add("right-panel-active");
-        });
-      }
-      if(signInButton){
-        signInButton.addEventListener('click', () => {
-            container.classList.remove("right-panel-active");
-        });
-      }
-    }
-</script>   
+	<script>
+		window.onload = function () {
+			const signUpButton = document.getElementById('signUp');
+			const signInButton = document.getElementById('signIn');
+			const container = document.getElementById('container');
+			if (signUpButton) {
+				signUpButton.addEventListener('click', () => {
+					container.classList.add("right-panel-active");
+				});
+			}
+			if (signInButton) {
+				signInButton.addEventListener('click', () => {
+					container.classList.remove("right-panel-active");
+				});
+			}
+		}
+	</script>
 </head>
 
 </div>
 <div class="loading">
 	<div class="image">
-	<img src="loading-gif.webp" alt="LOGO">    
+		<img src="loading-gif.webp" alt="LOGO">
 	</div>
-  </div>
+</div>
 
-<div class="container" id="container" >
+<div class="container" id="container">
 	<div class="form-container sign-up-container">
-		<form action="buttons.html" method="POST" >
+		<form action="buttons.html" method="POST">
 			<h1>Start Messaging</h1>
-			
+
 			<input type="file" name="c_name" />
 			<button>Upload</button>
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
-		<form action= "login.php" method="POST">
+		<form action="login.php" method="POST">
 			<h1>Create a form</h1>
 			<input type="text" id="email" name="email" placeholder="Name of the file" required />
 			<button>Start</button>
