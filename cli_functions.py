@@ -359,17 +359,15 @@ def filter_numbers_by_name_excel(file_path, message, filter_condition, name_patt
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
 
-if __name__ == "__main__":
-    # Example usage:
-    file_path = "../contacts.csv"
-    message = "Hello from the WhatsApp Messaging System!"
-    time_hour = 10
-    time_minute = 30
+# testing
+# if __name__ == "__main__":
+#     # Example usage:
+#     file_path = "../contacts.csv"
+#     message = "Hello from the WhatsApp Messaging System!"
+#     time_hour = 10
+#     time_minute = 30
 
-    # testing
-    send_messages_csv_all(file_path, message)
-
-    # # Keep the program running for scheduled tasks
-    # while True:
-    #     schedule.run_pending()
-    #     timee.sleep(1)
+#     # # Keep the program running for scheduled tasks
+#     # while True:
+#     #     schedule.run_pending()
+#     #     timee.sleep(1)

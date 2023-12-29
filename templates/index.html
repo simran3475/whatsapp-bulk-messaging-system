@@ -1,34 +1,34 @@
-<h2>Welcome to Whatsapp-Bulk-Messaging-Website!</h2>
-
-<head>
-	<styles>
-		<link rel="stylesheet" href="start_.css">
-
-
-	</styles>
-	<script>
-		window.onload = function () {
-			const signUpButton = document.getElementById('signUp');
-			const signInButton = document.getElementById('signIn');
-			const container = document.getElementById('container');
-			if (signUpButton) {
-				signUpButton.addEventListener('click', () => {
-					container.classList.add("right-panel-active");
-				});
-			}
-			if (signInButton) {
-				signInButton.addEventListener('click', () => {
-					container.classList.remove("right-panel-active");
-				});
-			}
+{% extends 'base.html' %}
+{% block title %}{% endblock title %}
+{% block script %}
+<styles>
+	<link rel="stylesheet" href="../static/css/index_style.css">
+</styles>
+<script>
+	window.onload = function () {
+		const signUpButton = document.getElementById('signUp');
+		const signInButton = document.getElementById('signIn');
+		const container = document.getElementById('container');
+		if (signUpButton) {
+			signUpButton.addEventListener('click', () => {
+				container.classList.add("right-panel-active");
+			});
 		}
-	</script>
-</head>
+		if (signInButton) {
+			signInButton.addEventListener('click', () => {
+				container.classList.remove("right-panel-active");
+			});
+		}
+	}
+</script>
+{% endblock script %}
+
+{% block body %}
+<h2>Welcome to Whatsapp Bulk Messaging Services</h2>
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
-		<form action="signup.php" method="POST">
+		<form action="/signup" method="POST">
 			<h1>Create Account</h1>
-
 			<input type="text" name="c_name" placeholder="Name" />
 			<input type="email" name="c_email" placeholder="Email" />
 			<input type="password" name="c_pass" placeholder="Password" />
@@ -36,7 +36,7 @@
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
-		<form action="start.php" method="POST">
+		<form action="/" method="POST">
 			<h1>Sign in</h1>
 			<input type="email" id="email" name="email" placeholder="Email" />
 			<input type="password" id="pass" name="pass" placeholder="Password" />
@@ -58,3 +58,5 @@
 			</div>
 		</div>
 	</div>
+</div>
+{% endblock body %}
