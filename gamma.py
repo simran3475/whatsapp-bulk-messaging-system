@@ -15,7 +15,7 @@ from selenium.webdriver.common.by import By
 
 # Include all the other required libraries
 import schedule
-import time
+import time as timee
 import pandas as pd
 from datetime import datetime, timedelta, time
 from urllib.parse import quote
@@ -25,7 +25,7 @@ def open_whastapp():
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
     link = "https://web.whatsapp.com/"
     driver.get(link)
-    time.sleep(15)
+    timee.sleep(15)
 
 # Function to send a message on whatsapp
 def send_message(number, message, country_code="91"):
@@ -33,14 +33,15 @@ def send_message(number, message, country_code="91"):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
     link = f"https://web.whatsapp.com/send?phone={country_code}{number}&text={_message}" # URL to send a message to a number
     driver.get(link)
-    time.sleep (5) # Wait for 5 seconds to load the page
+    timee.sleep (5) # Wait for 5 seconds to load the page
     action = ActionChains (driver) 
     action.send_keys (Keys.ENTER) 
     action.perform() 
-    time.sleep (5) # Wait for 5 seconds to confirm the message is sent
+    timee.sleep (5) # Wait for 5 seconds to confirm the message is sent
 
 # Function to send messages to all the numbers in a CSV file
 def send_messages_csv_all(file_path, message, column_name='Phone No.'):
+    open_whastapp()
     try:
         df = pd.read_csv(file_path)
         numbers = df['Phone No.'].tolist()
@@ -192,3 +193,23 @@ def filter_numbers_by_name_excel(file_path, message, filter_condition, name_patt
 
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+
+if __name__ == "__main__":
+    # Example usage:
+    file_path = "../contacts.csv"
+    message = "Hello from the WhatsApp Messaging System!"
+    time_hour = 10
+    time_minute = 30
+
+    '''
+    before running this code, open whatsapp web in your browser and you have to be logged in 
+    otherwise it will not work
+    '''
+
+    # testing
+    send_messages_csv_all(file_path, message)
+
+    # Keep the program running for scheduled tasks
+    while True:
+        schedule.run_pending()
+        timee.sleep(1)
