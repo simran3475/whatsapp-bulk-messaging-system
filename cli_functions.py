@@ -175,6 +175,10 @@ def filter_by_tag_csv(file_path, message, tag, tag_column_name='Tag'):
     # Send a message to all the numbers that have the specified tag in the CSV file
     try:
         df = pd.read_csv(file_path)
+        try:
+            country_code = df['Country Code'][0]
+        except KeyError:
+            country_code = "91"
         numbers = df[df[tag_column_name].str.lower() == tag.lower()]['Phone No.'].str.replace(" ", "").tolist()
         for number in numbers:
             # send_message(number, message)
@@ -216,6 +220,10 @@ def filter_by_tag_excel(file_path, message, tag, tag_column_name='Tag'):
     # Send a message to all the numbers that have the specified tag in the Excel file
     try:
         df = pd.read_excel(file_path)
+        try:
+            country_code = df['Country Code'][0]
+        except KeyError:
+            country_code = "91"
         numbers = df[df[tag_column_name].str.lower() == tag.lower()]['Phone No.'].str.replace(" ", "").tolist()
         for number in numbers:
             # send_message(number, message)
@@ -256,6 +264,10 @@ def filter_numbers_by_name_csv(file_path, message, filter_condition, name_patter
     input("Please scan the QR code, then press Enter to continue.")
     try:
         df = pd.read_csv(file_path)
+        try:
+            country_code = df['Country Code'][0]
+        except KeyError:
+            country_code = "91"
         # Apply the filtering condition based on the name pattern
         if filter_condition == 'starts_with':
             filtered_df = df[df[column_name].str.startswith(name_pattern, na=False)]
@@ -304,6 +316,10 @@ def filter_numbers_by_name_excel(file_path, message, filter_condition, name_patt
     input("Please scan the QR code, then press Enter to continue.")
     try:
         df = pd.read_excel(file_path)
+        try:
+            country_code = df['Country Code'][0]
+        except KeyError:
+            country_code = "91"
         # Apply the filtering condition based on the name pattern
         if filter_condition == 'starts_with':
             filtered_df = df[df[column_name].str.startswith(name_pattern, na=False)]
