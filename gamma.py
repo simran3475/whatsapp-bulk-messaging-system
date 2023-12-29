@@ -17,6 +17,7 @@ from selenium.webdriver.common.by import By
 import schedule
 import time as timee
 import pandas as pd
+# import pyautogui as pg
 from datetime import datetime, timedelta, time
 from urllib.parse import quote
 
@@ -33,20 +34,54 @@ def send_message(number, message, country_code="91"):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
     link = f"https://web.whatsapp.com/send?phone={country_code}{number}&text={_message}" # URL to send a message to a number
     driver.get(link)
-    timee.sleep (5) # Wait for 5 seconds to load the page
-    action = ActionChains (driver) 
-    action.send_keys (Keys.ENTER) 
+    timee.sleep(5) # Wait for 5 seconds to load the page
+    action = ActionChains(driver) 
+    action.send_keys(Keys.RETURN) 
     action.perform() 
-    timee.sleep (5) # Wait for 5 seconds to confirm the message is sent
+    try:
+        send_button = driver.find_elements_by_class_name("tvf2evcx 0q44ahr5 1b5m65c svlsagor p2rjqpw5 epia9gcq")
+        send_button.click()
+    except:
+        pass
+    timee.sleep(5) # Wait for 5 seconds to confirm the message is sent
 
 # Function to send messages to all the numbers in a CSV file
 def send_messages_csv_all(file_path, message, column_name='Phone No.'):
-    open_whastapp()
+    # Opens Whatsapp Web in the browser 
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+    link = "https://web.whatsapp.com/"
+    driver.get(link)
+    timee.sleep(15)
+    input("Please scan the QR code, then press Enter to continue.")
+
     try:
         df = pd.read_csv(file_path)
-        numbers = df['Phone No.'].tolist()
+
+        # check for country code
+        try:
+            country_code = df['Country Code'][0]
+        except KeyError:
+            country_code = "91"
+        
+        numbers = (df['Phone No.'].str.replace(" ", "")).tolist()
         for number in numbers:
-            send_message(number, message)
+            # send_message(number, message)
+            _message = quote(message)
+            # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+            # link_send = f"https://wa.me/{country_code}{number}?text={_message}"
+            link_send = f"https://web.whatsapp.com/send?phone={country_code}{number}&text={_message}" # URL to send a message to a number
+            driver.get(link_send)
+            timee.sleep(5) # Wait for 5 seconds to load the page
+            # pg.press('return')
+            action = ActionChains(driver) 
+            action.send_keys(Keys.RETURN) 
+            action.perform() 
+            try:
+                send_button = driver.find_elements_by_class_name("tvf2evcx 0q44ahr5 1b5m65c svlsagor p2rjqpw5 epia9gcq")
+                send_button.click()
+            except:
+                pass
+            timee.sleep(5) # Wait for 5 seconds to confirm the message is sent
 
     except pd.errors.EmptyDataError:
         print("Error: The CSV file is empty.")
@@ -61,11 +96,40 @@ def send_messages_csv_all(file_path, message, column_name='Phone No.'):
 
 # Function to send messages to all the numbers in a Excel file
 def send_messages_excel_all(file_path, message, column_name='Phone No.'):
+    # Opens Whatsapp Web in the browser 
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+    link = "https://web.whatsapp.com/"
+    driver.get(link)
+    timee.sleep(15)
+    input("Please scan the QR code, then press Enter to continue.")
     try:
         df = pd.read_excel(file_path)
-        numbers = df[column_name].tolist()
+
+        try:
+            country_code = df['Country Code'][0]
+        except KeyError:
+            country_code = "91"
+        
+        numbers = (df['Phone No.'].str.replace(" ", "")).tolist()
+        
         for number in numbers:
-            send_message(number, message)
+            # send_message(number, message)
+            _message = quote(message)
+            # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+            # link_send = f"https://wa.me/{country_code}{number}?text={_message}"
+            link_send = f"https://web.whatsapp.com/send?phone={country_code}{number}&text={_message}" # URL to send a message to a number
+            driver.get(link_send)
+            timee.sleep(5) # Wait for 5 seconds to load the page
+            # pg.press('return')
+            action = ActionChains(driver) 
+            action.send_keys(Keys.RETURN) 
+            action.perform() 
+            try:
+                send_button = driver.find_elements_by_class_name("tvf2evcx 0q44ahr5 1b5m65c svlsagor p2rjqpw5 epia9gcq")
+                send_button.click()
+            except:
+                pass
+            timee.sleep(5) # Wait for 5 seconds to confirm the message is sent
 
     except pd.errors.EmptyDataError:
         print("Error: The Excel file is empty.")
@@ -102,12 +166,34 @@ def schedule_message_yearly(file_path, message, time_hour, time_minute, day, mon
 
 # Function can be used to filter the numbers based on the criteria specified by the user (tags/places/etc.)
 def filter_by_tag_csv(file_path, message, tag, tag_column_name='Tag'):
+    # opens whatsapp web in the browser
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+    link = "https://web.whatsapp.com/"
+    driver.get(link)
+    timee.sleep(15)
+    input("Please scan the QR code, then press Enter to continue.")
     # Send a message to all the numbers that have the specified tag in the CSV file
     try:
         df = pd.read_csv(file_path)
-        numbers = df[df[tag_column_name].lower() == tag.lower()]['Phone No.'].tolist()
+        numbers = df[df[tag_column_name].str.lower() == tag.lower()]['Phone No.'].str.replace(" ", "").tolist()
         for number in numbers:
-            send_message(number, message)
+            # send_message(number, message)
+            _message = quote(message)
+            # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+            # link_send = f"https://wa.me/{country_code}{number}?text={_message}"
+            link_send = f"https://web.whatsapp.com/send?phone={country_code}{number}&text={_message}" # URL to send a message to a number
+            driver.get(link_send)
+            timee.sleep(5) # Wait for 5 seconds to load the page
+            # pg.press('return')
+            action = ActionChains(driver) 
+            action.send_keys(Keys.RETURN) 
+            action.perform() 
+            try:
+                send_button = driver.find_elements_by_class_name("tvf2evcx 0q44ahr5 1b5m65c svlsagor p2rjqpw5 epia9gcq")
+                send_button.click()
+            except:
+                pass
+            timee.sleep(5) # Wait for 5 seconds to confirm the message is sent
 
     except pd.errors.EmptyDataError:
         print("Error: The CSV file is empty.")
@@ -122,12 +208,33 @@ def filter_by_tag_csv(file_path, message, tag, tag_column_name='Tag'):
 
 # Function can be used to filter the numbers based on the criteria specified by the user (tags/places/etc.)
 def filter_by_tag_excel(file_path, message, tag, tag_column_name='Tag'):
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+    link = "https://web.whatsapp.com/"
+    driver.get(link)
+    timee.sleep(15)
+    input("Please scan the QR code, then press Enter to continue.")
     # Send a message to all the numbers that have the specified tag in the Excel file
     try:
         df = pd.read_excel(file_path)
-        numbers = df[df[tag_column_name].lower() == tag.lower()]['Phone No.'].tolist()
+        numbers = df[df[tag_column_name].str.lower() == tag.lower()]['Phone No.'].str.replace(" ", "").tolist()
         for number in numbers:
-            send_message(number, message)
+            # send_message(number, message)
+            _message = quote(message)
+            # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+            # link_send = f"https://wa.me/{country_code}{number}?text={_message}"
+            link_send = f"https://web.whatsapp.com/send?phone={country_code}{number}&text={_message}" # URL to send a message to a number
+            driver.get(link_send)
+            timee.sleep(5) # Wait for 5 seconds to load the page
+            # pg.press('return')
+            action = ActionChains(driver) 
+            action.send_keys(Keys.RETURN) 
+            action.perform() 
+            try:
+                send_button = driver.find_elements_by_class_name("tvf2evcx 0q44ahr5 1b5m65c svlsagor p2rjqpw5 epia9gcq")
+                send_button.click()
+            except:
+                pass
+            timee.sleep(5) # Wait for 5 seconds to confirm the message is sent
 
     except pd.errors.EmptyDataError:
         print("Error: The Excel file is empty.")
@@ -142,6 +249,11 @@ def filter_by_tag_excel(file_path, message, tag, tag_column_name='Tag'):
 
 # Function to filter the numbers based on names (starts with/ends with/contains) using a CSV file
 def filter_numbers_by_name_csv(file_path, message, filter_condition, name_pattern, column_name='Name'):
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+    link = "https://web.whatsapp.com/"
+    driver.get(link)
+    timee.sleep(15)
+    input("Please scan the QR code, then press Enter to continue.")
     try:
         df = pd.read_csv(file_path)
         # Apply the filtering condition based on the name pattern
@@ -152,9 +264,25 @@ def filter_numbers_by_name_csv(file_path, message, filter_condition, name_patter
         elif filter_condition == 'contains':
             filtered_df = df[df[column_name].str.contains(name_pattern, na=False)]
         # Extract the 'Phone No.' column from the filtered DataFrame
-        filtered_numbers = filtered_df['Phone No.'].tolist()
+        filtered_numbers = filtered_df['Phone No.'].str.replace(" ", "").tolist()
         for number in filtered_numbers:
-                send_message(number, message)
+            # send_message(number, message)
+            _message = quote(message)
+            # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+            # link_send = f"https://wa.me/{country_code}{number}?text={_message}"
+            link_send = f"https://web.whatsapp.com/send?phone={country_code}{number}&text={_message}" # URL to send a message to a number
+            driver.get(link_send)
+            timee.sleep(5) # Wait for 5 seconds to load the page
+            # pg.press('return')
+            action = ActionChains(driver) 
+            action.send_keys(Keys.RETURN) 
+            action.perform() 
+            try:
+                send_button = driver.find_elements_by_class_name("tvf2evcx 0q44ahr5 1b5m65c svlsagor p2rjqpw5 epia9gcq")
+                send_button.click()
+            except:
+                pass
+            timee.sleep(5) # Wait for 5 seconds to confirm the message is sent
 
     except pd.errors.EmptyDataError:
         print("Error: The CSV file is empty.")
@@ -169,6 +297,11 @@ def filter_numbers_by_name_csv(file_path, message, filter_condition, name_patter
 
 # Function to filter the numbers based on names (starts with/ends with/contains) using a Excel file
 def filter_numbers_by_name_excel(file_path, message, filter_condition, name_pattern, column_name='Name'):
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+    link = "https://web.whatsapp.com/"
+    driver.get(link)
+    timee.sleep(15)
+    input("Please scan the QR code, then press Enter to continue.")
     try:
         df = pd.read_excel(file_path)
         # Apply the filtering condition based on the name pattern
@@ -179,9 +312,25 @@ def filter_numbers_by_name_excel(file_path, message, filter_condition, name_patt
         elif filter_condition == 'contains':
             filtered_df = df[df[column_name].str.contains(name_pattern, na=False)]
         # Extract the 'Phone No.' column from the filtered DataFrame
-        filtered_numbers = filtered_df['Phone No.'].tolist()
+        filtered_numbers = filtered_df['Phone No.'].str.replace(" ", "").tolist()
         for number in filtered_numbers:
-                send_message(number, message)
+            # send_message(number, message)
+            _message = quote(message)
+            # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install())) # Install/Creating a new instance of ChromeDriver
+            # link_send = f"https://wa.me/{country_code}{number}?text={_message}"
+            link_send = f"https://web.whatsapp.com/send?phone={country_code}{number}&text={_message}" # URL to send a message to a number
+            driver.get(link_send)
+            timee.sleep(5) # Wait for 5 seconds to load the page
+            # pg.press('return')
+            action = ActionChains(driver) 
+            action.send_keys(Keys.RETURN) 
+            action.perform() 
+            try:
+                send_button = driver.find_elements_by_class_name("tvf2evcx 0q44ahr5 1b5m65c svlsagor p2rjqpw5 epia9gcq")
+                send_button.click()
+            except:
+                pass
+            timee.sleep(5) # Wait for 5 seconds to confirm the message is sent
 
     except pd.errors.EmptyDataError:
         print("Error: The Excel file is empty.")
@@ -201,15 +350,10 @@ if __name__ == "__main__":
     time_hour = 10
     time_minute = 30
 
-    '''
-    before running this code, open whatsapp web in your browser and you have to be logged in 
-    otherwise it will not work
-    '''
-
     # testing
     send_messages_csv_all(file_path, message)
 
-    # Keep the program running for scheduled tasks
-    while True:
-        schedule.run_pending()
-        timee.sleep(1)
+    # # Keep the program running for scheduled tasks
+    # while True:
+    #     schedule.run_pending()
+    #     timee.sleep(1)
