@@ -23,6 +23,7 @@ def send_messages_to_all(file_path, message):
             pywhatkit.sendwhatmsg_instantly(number, message)
             pg.press("enter")
             pg.press("ctrl+w")
+            time.sleep(10)
 
 def schedule_message(file_path, message, time_hour, time_minute):
     # Schedules a message to be sent at the specified time.
@@ -44,7 +45,7 @@ def filter_and_send(file_path, message, filter_criteria):
 
 if __name__ == "__main__":
     # Example usage:
-    file_path = "contacts.csv"
+    file_path = "../contacts.csv"
     message = "Hello from the WhatsApp Messaging System!"
     time_hour = 10
     time_minute = 30

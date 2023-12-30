@@ -74,7 +74,7 @@ def signup():
                 db.session.commit()
             return render_template('index.html', success_message='Account created successfully. Please login to continue.')
     else:
-        return render_template('signup.html')
+        return render_template('index.html')
 
 @app.route('/tables')
 
@@ -116,10 +116,8 @@ def upload(username):
             user.tables[len_json] = filename
             file.save(os.path.join('uploads/', filename))
             db.session.commit()
-
-        return render_template('buttons.html', success='File successfully uploaded')
-
-    return render_template('after_login.html')
+            return render_template('buttons.html', success='File successfully uploaded', username=username, all_data=details)
+    return render_template('after_login.html', username=username)
 
 @app.route("/tables/<username>", methods=['GET', 'POST'])
 def load_tables(username):

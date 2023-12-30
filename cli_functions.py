@@ -367,7 +367,8 @@ def filter_numbers_by_name_excel(file_path, message, filter_condition, name_patt
 #     time_hour = 10
 #     time_minute = 30
 
+#     send_messages_csv_all(file_path, message)
 #     # # Keep the program running for scheduled tasks
-#     # while True:
-#     #     schedule.run_pending()
-#     #     timee.sleep(1)
+#     while True:
+#         schedule.run_pending()
+#         timee.sleep(1)

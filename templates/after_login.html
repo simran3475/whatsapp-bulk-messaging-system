@@ -72,12 +72,14 @@
 			</div>
 		</div>
 	</div>
-	{% if please_click_me %}
+	<!-- {% if please_click_me %}
 		<button href='/tables/{{username}}' class="invisible-button" id="clickclcl">Click Me</button>	
 		<script>
 			var button = document.getElementById('clickclcl');
-			button.click();
+			button.addEventListener('click', function () {
+                window.location.href = '/tables/{{username}}';
+			});
 		</script>
-	{% endif %}
+	{% endif %} -->
 </div>
 {% endblock body %}
