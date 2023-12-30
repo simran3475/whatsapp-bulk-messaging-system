@@ -28,6 +28,18 @@
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
 		<form action="/signup" method="POST">
+			{% if error_message %}
+				<script> alert("{{error_message}}"); </script>
+			{% endif %}
+			{% if success_message %}
+				<script> 
+					alert("{{success_message}}");
+					try	{
+						var button = document.getElementById('signIn');
+						button.click();
+					} catch (error) {}
+				</script>
+			{% endif %}
 			<h1>Create Account</h1>
 			<input type="text" name="c_name" placeholder="Name" />
 			<input type="email" name="c_email" placeholder="Email" />
@@ -38,6 +50,9 @@
 	<div class="form-container sign-in-container">
 		<form action="/" method="POST">
 			<h1>Sign in</h1>
+			{% if error_message %}
+				<script> alert("{{error_message}}") </script>
+			{% endif %}
 			<input type="email" id="email" name="email" placeholder="Email" />
 			<input type="password" id="pass" name="pass" placeholder="Password" />
 			<a href="#">Forgot your password?</a>
