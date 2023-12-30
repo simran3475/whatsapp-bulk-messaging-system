@@ -78,13 +78,18 @@ def signup():
 
 @app.route('/tables')
 
-def load(link ,username):
-    return render_template(link, username=username)
+# def load(link ,username):
+#     return render_template(link, username=username)
 # @app.route('/upload', methods=['GET', 'POST'])
+
+@app.route('/upload/<username>/send_data', methods=['GET', 'POST'])
+def send_data(username):
+    return render_template('after_login.html', username=username, please_click_me='Please click me')
+
 @app.route('/upload/<username>', methods=['GET', 'POST'])
 def upload(username):
     # render_template('after_login.html', username=username)
-    load('after_login.html', username)
+    # load('after_login.html', username)
     ALLOWED_EXTENSIONS = {'csv', 'xlsx', 'xls'}
     def allowed_file(filename):
         return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -121,12 +126,17 @@ def load_tables(username):
     data = all_details()
     tables = data[-1][data[1].index(username)]
     length = len(tables)
-    return render_template('tables.html', tables=tables, length=length, username=username)
 
-@app.route("/tables/<username>")
-# def show()
+    if request.method == 'POST':
+        for i in (length):
+            try:
+                table = request.form[f'{username}_{tables[i]}']
+                return render_template('buttons.html', table=table)
+            except:
+                pass
 
-@app.route('/<username>/<table_name>', methods=['GET'])
+
+@app.route('/create_table', methods=['GET'])
 def create_table(username, table_name):
     data = all_details()
     # Check if the username exists in the database

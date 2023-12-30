@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}{% endblock title %}
 {% block script %}
-	<styles>
-		<link rel="stylesheet" href="../static/css/login.css">
-		<link rel="stylesheet" href="../static/css/style copy.css">
-		
-	</styles>
+	<link rel="stylesheet" href="../static/css/login.css">
+	<link rel="stylesheet" href="../static/css/style copy.css">
+	
+	<style>
+		.invisible-button {
+            display: none;
+        }
+	</style>
 	
 	<script>
 		window.onload = function () {
@@ -31,13 +34,14 @@
 </div>
 <div class="loading">
 	<div class="image">
-		<img src="loading-gif.webp" alt="LOGO">
+		<img src="../static/resources/loading-gif.webp" alt="LOGO">
 	</div>
 </div>
 
 {% if error %}
 	<script> alert("{{error}}"); </script>
 {% endif %}
+
 
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
@@ -48,9 +52,9 @@
 		</form>
 	</div>
 	<div class="form-container sign-in-container">
-		<form action="login.php" method="POST">
+		<form action="/create_table/{{username}}" method="POST">
 			<h1>Create a form</h1>
-			<input type="text" id="email" name="email" placeholder="Name of the file" required />
+			<input type="text" id="email" name="ffile" placeholder="Name of the file" required />
 			<button>Start</button>
 		</form>
 	</div>
@@ -68,5 +72,12 @@
 			</div>
 		</div>
 	</div>
+	{% if please_click_me %}
+		<button href='/tables/{{username}}' class="invisible-button" id="clickclcl">Click Me</button>	
+		<script>
+			var button = document.getElementById('clickclcl');
+			button.click();
+		</script>
+	{% endif %}
 </div>
 {% endblock body %}

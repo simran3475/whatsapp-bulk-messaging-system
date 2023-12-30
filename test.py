@@ -9,29 +9,28 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
-    if request.method == 'POST':
-        # check if the postgit  request has the file part
-        if 'file' not in request.files:
-            return render_template('index.html', error='No file part')
+    # if request.method == 'POST':
+    #     # check if the postgit  request has the file part
+    #     if 'file' not in request.files:
+    #         return render_template('index.html', error='No file part')
 
-        file = request.files['file']
+    #     file = request.files['file']
 
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            return render_template('index.html', error='No selected file')
+    #     # if user does not select file, browser also
+    #     # submit an empty part without filename
+    #     if file.filename == '':
+    #         return render_template('index.html', error='No selected file')
 
-        # Save the file to the desired location
-        filename = secure_filename(file.filename)
-        file.save(os.path.join('uploads/', filename))
+    #     # Save the file to the desired location
+    #     filename = secure_filename(file.filename)
+    #     file.save(os.path.join('uploads/', filename))
 
-        return render_template('index.html', success='File successfully uploaded')
-
+    #     return render_template('index.html', success='File successfully uploaded')
+    print("Hello Worldrvebtbrynet5yjmemmemu")
     return render_template('index.html')
-
-# @app.route('/')
-# def hello_world():
-#     return render_template('index.html')
+def hello_world():
+    print("Hello World")
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
