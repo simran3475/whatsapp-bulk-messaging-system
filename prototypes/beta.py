@@ -10,7 +10,7 @@ import pywhatkit
 import schedule
 import time
 
-import tkinter as tk
+import pyautogui as pg
 
 def send_messages_to_all(file_path, message):
     # Reads numbers from a CSV file and sends the message to each.
@@ -21,6 +21,7 @@ def send_messages_to_all(file_path, message):
         for row in reader:
             number = row[header.index('Phone No.')] 
             pywhatkit.sendwhatmsg_instantly(number, message)
+            pg.press("enter")
 
 def schedule_message(file_path, message, time_hour, time_minute):
     # Schedules a message to be sent at the specified time.
