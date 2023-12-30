@@ -41,14 +41,7 @@
     </div>
 
 
-    <div id="email" class="form-input-group">
-      <label for="email-input">Email</label>
-      <span class="text-input">
-        <input placeholder="Enter your email" type="text" name="email" id="email-input" required>
-      </span>
-      <div class="error-text">Email is not valid</div>
-    </div>
-
+    
     <div id="github" class="form-input-group">
       <label for="github-input">Residence</label>
       <span class="text-input">
@@ -56,7 +49,7 @@
       </span>
       <div class="error-text">Try again!</div>
     </div>
-
+    
     <div id="mobile" class="form-input-group">
       <label for="mobile-input">Phone No.</label>
       <span class="text-input">
@@ -64,8 +57,7 @@
       </span>
       <div class="error-text">Phone Number should contain number</div>
     </div>
-
-    <div id="gender" class="form-input-group">
+    <!-- <div id="gender" class="form-input-group">
       <label for="gender-input">Gender</label>
       <div class="option-group">
         <input type="radio" name="gender" id="gender-male" value="male">
@@ -73,20 +65,29 @@
         <input type="radio" name="gender" id="gender-female" value="female">
         <label for="gender-female">Female</label>
       </div>
-      <div class="error-text">Choose a gender</div>
+      <div class="error-text">Choose a gender</div> -->
     </div>
-
+    
     <hr class="separator">
-
-    <div id="age" class="form-input-group">
-      <label for="age-input">Age</label>
+    
+    <div id="email" class="form-input-group">
+      <label for="email-input">Email</label>
       <span class="text-input">
-        <input placeholder="Enter your age" type="text" name="age" id="age-input">
+        <input placeholder="Enter your email" type="text" name="email" id="email-input" >
+      </span>
+      <div class="error-text">Email is not valid</div>
+    </div>
+    
+    
+    <div id="Tag" class="form-input-group">
+      <label for="age-input">Tag</label>
+      <span class="text-input">
+        <input placeholder="Tag?" type="text" name="tag" id="age-input">
       </span>
       <div class="error-text">Age should be a number</div>
     </div>
 
-    <div id="morality" class="form-input-group">
+    <!-- <div id="morality" class="form-input-group">
       <label for="morality-input">Year of Graduation</label>
       <div class="option-group">
         <input type="radio" name="morality" id="morality-good" value="good">
@@ -114,13 +115,13 @@
 
     <div id="submit" class="form-input-group">
       <button type="submit">Submit</button>
-    </div>
+    </div> -->
 
     <!-- This Part is for Script---------------------------------  -->
-
+  <button type="submit" class="btn btn-primary">Submit</button>
   </form>
   <script type="module">
-    import { init, validateOn, required } from "forms.js"
+    import { init, validateOn, required } from "../static/scripts/forms.js"
     init()
 
     const validate = validateOn("change", "keyup")
@@ -128,11 +129,11 @@
     const requiredFields = ["name", "gender", "morality", "languages"]
     requiredFields.map(data => validate(data, required(`${data.charAt(0).toUpperCase() + data.slice(1)} is required`)))
 
-    validate("age", required("Age is required"), async value => {
-      if (Number.isNaN(Number(value))) {
-        throw new Error("Age should be a number")
-      }
-    })
+    // validate("age", required("Age is required"), async value => {
+    //   if (Number.isNaN(Number(value))) {
+    //     throw new Error("Age should be a number")
+    //   }
+    // })
 
     validate("mobile", required("Phone No. is required"), async value => {
       if (Number.isNaN(Number(value))) {
@@ -140,19 +141,19 @@
       }
     })
 
-    validate("email", required("Email is required"), async value => {
+    validate("email", async value => {
       const mailformat = /^[A-Za-z\d\.]+\@[A-Za-z]+\.[a-z]{2,3}$/
       if (!mailformat.test(value)) {
         throw new Error("Please enter a valid email")
       }
     })
 
-    validate("github", required("Github User Profile Link is required"), async value => {
-      const githubformat = /^[a-zA-Z0-9_-]+$/
-      if (!githubformat.test(value)) {
-        throw new Error("Please enter a valid address.")
-      }
-    })
+    // validate("github", required("Github User Profile Link is required"), async value => {
+    //   const githubformat = /^[a-zA-Z0-9_-]+$/
+    //   if (!githubformat.test(value)) {
+    //     throw new Error("Please enter a valid address.")
+    //   }
+    // })
   </script>
 </body>
 

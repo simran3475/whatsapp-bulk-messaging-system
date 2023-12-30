@@ -1,0 +1,48 @@
+<html>
+
+<head>
+  <!-- HTML Meta Tags -->
+  <title>Creation of Form</title>
+  <link rel="stylesheet" href="../static/css/formCreation.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <script src="../static/scripts/alert.js"></script>
+
+  <style>
+    body {
+      padding: 15vh 15vw;
+    }
+
+    button {
+        width: 6-px;
+        height: 52px;
+        font-size: 12px;
+    }
+
+    @media (max-width: 400px) {
+      body {
+        padding: 5vh 5vw;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div id="tables" class="form-input-group">
+    <label for="table-input">Your Tables</label> <br/>
+    <div class="option-group">
+        {% for i in tables.keys() %}
+            <input type="radio" name="{{username}}_{{tables[i]}}" id="{{username}}_{{tables[i]}}" value="{{tables[i]}}">
+            <label for="{{tables[i]}}">{{tables[i]}}</label>
+        {% endfor %}
+    <!-- <input type="radio" name="gender" id="gender-female" value="female">
+    <label for="gender-female">Female</label> -->
+    </div>
+    <div class="error-text">Choose a <table></table></div>
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</body>

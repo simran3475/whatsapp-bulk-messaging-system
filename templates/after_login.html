@@ -1,12 +1,12 @@
-<h2>The Process Begins!</h2>
-
-<head>
+{% extends 'base.html' %}
+{% block title %}{% endblock title %}
+{% block script %}
 	<styles>
 		<link rel="stylesheet" href="../static/css/login.css">
 		<link rel="stylesheet" href="../static/css/style copy.css">
-
+		
 	</styles>
-
+	
 	<script>
 		window.onload = function () {
 			const signUpButton = document.getElementById('signUp');
@@ -23,9 +23,11 @@
 				});
 			}
 		}
-	</script>
-</head>
+		</script>
+{% endblock script %}
 
+{% block body %}
+<h2>The Process Begins!</h2>
 </div>
 <div class="loading">
 	<div class="image">
@@ -33,12 +35,15 @@
 	</div>
 </div>
 
+{% if error %}
+	<script> alert("{{error}}"); </script>
+{% endif %}
+
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
-		<form action="buttons.html" method="POST">
+		<form action="/upload/{{username}}" method="POST" enctype="multipart/form-data">
 			<h1>Start Messaging</h1>
-
-			<input type="file" name="c_name" />
+			<input type="file" name="file" />
 			<button>Upload</button>
 		</form>
 	</div>
@@ -64,3 +69,4 @@
 		</div>
 	</div>
 </div>
+{% endblock body %}

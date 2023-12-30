@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from werkzeug.utils import secure_filename
 
 import cli_functions as cli
+
+import os
 
 # users_and_tables = {} # {"username": [table1, table2, table3]}
 
@@ -72,6 +75,56 @@ def signup():
             return render_template('index.html', success_message='Account created successfully. Please login to continue.')
     else:
         return render_template('signup.html')
+
+@app.route('/tables')
+
+def load(link ,username):
+    return render_template(link, username=username)
+# @app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload/<username>', methods=['GET', 'POST'])
+def upload(username):
+    # render_template('after_login.html', username=username)
+    load('after_login.html', username)
+    ALLOWED_EXTENSIONS = {'csv', 'xlsx', 'xls'}
+    def allowed_file(filename):
+        return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    if request.method == 'POST':
+        # check if the postgit  request has the file part
+        if 'file' not in request.files:
+            return render_template('after_login.html', error='No file part')
+
+        file = request.files['file']
+
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            return render_template('after_login.html', error='No selected file')
+
+        if allowed_file(file.filename) == False:
+            return render_template('after_login.html', error='File type not supported. You can only upload csv, xlsx and xls files')
+        else: 
+            # Save the file to the desired location
+            filename = f"{username}_{secure_filename(file.filename)}"
+            details = all_details()
+            user = User.query.filter_by(username=username).first()
+            len_json = len(user.tables)
+            user.tables[len_json] = filename
+            file.save(os.path.join('uploads/', filename))
+            db.session.commit()
+
+        return render_template('buttons.html', success='File successfully uploaded')
+
+    return render_template('after_login.html')
+
+@app.route("/tables/<username>", methods=['GET', 'POST'])
+def load_tables(username):
+    data = all_details()
+    tables = data[-1][data[1].index(username)]
+    length = len(tables)
+    return render_template('tables.html', tables=tables, length=length, username=username)
+
+@app.route("/tables/<username>")
+# def show()
 
 @app.route('/<username>/<table_name>', methods=['GET'])
 def create_table(username, table_name):
