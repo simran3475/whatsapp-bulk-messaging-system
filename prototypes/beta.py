@@ -22,6 +22,7 @@ def send_messages_to_all(file_path, message):
             number = row[header.index('Phone No.')] 
             pywhatkit.sendwhatmsg_instantly(number, message)
             pg.press("enter")
+            pg.press("ctrl+w")
 
 def schedule_message(file_path, message, time_hour, time_minute):
     # Schedules a message to be sent at the specified time.
