@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm.attributes import flag_modified
 from datetime import datetime
 from werkzeug.utils import secure_filename
 
@@ -113,59 +114,80 @@ def upload(username):
             details = all_details()
             user = User.query.filter_by(username=username).first()
             len_json = len(user.tables)
-            user.tables[len_json] = filename
-            file.save(os.path.join('uploads/', filename))
+            user.tables[len_json] = filename   
+            print(user.tables)
+            file.save(os.path.join('uploads/', file.filename))
+            # Mark the 'tables' field as modified to ensure it gets updated
+            flag_modified(user, 'tables')
             db.session.commit()
+            details = all_details()
+            print(details)
             return render_template('buttons.html', success='File successfully uploaded', username=username, all_data=details)
     return render_template('after_login.html', username=username)
 
-@app.route("/tables/<username>", methods=['GET', 'POST'])
-def load_tables(username):
+@app.route('/<username>')
+def load_create_table(username):
+    return render_template('after_login.html', username=username)
+
+@app.route('/create_table/<username>', methods=['GET', 'POST'])
+def create_table(username):
+    if request.method == 'POST':
+        table_name = request.form['ffile']
+        data = all_details()
+        # Check if the table exists in the database
+        if table_name in data[-1][data[1].index(username)].values():
+            # return f"Table {table_name} already exists for user {username}"
+            return render_template('after_login.html', username=username, table_name=table_name, table_exists='Table already exists')
+        else:
+            # Define a dynamic table class for each user and table combination
+            table_class_name = f"{username}_{table_name}"
+            DynamicTable = type(table_class_name, (db.Model,),{
+                'id': db.Column(db.Integer, primary_key=True),
+                'name': db.Column(db.String(50), nullable=False),
+                'place': db.Column(db.String(50), nullable=False),
+                'phone_no': db.Column(db.String(10), nullable=False),   
+                'email': db.Column(db.String(50), nullable=True),
+                'tag': db.Column(db.String(50), nullable=True)
+            })
+            user = User.query.filter_by(username=username).first()
+            len_json = len(user.tables)
+            user.tables[len_json] = table_name
+            flag_modified(user, 'tables')
+            db.session.commit()
+        '''
+        Dynamic Allocation of Database Tables explaained:
+        - table_class_name: It's a string that combines username and table_name to create a unique identifier for the table class. This ensures that each user and table combination has a distinct table class name.
+        - DynamicTable: This is the dynamically created table class. It uses the type() function to create a new class with the given name (table_class_name). The parameters for type() are:
+        - table_class_name: The name of the new class.
+        - (db.Model,): A tuple of base classes for the new class. In this case, it inherits from db.Model, which is the base class for SQLAlchemy models.
+            The third argument is a dictionary that defines the attributes of the class. In this case:
+            'id': db.Column(db.Integer, primary_key=True): It defines an id column of type Integer, which serves as the primary key for the table.
+            'data': db.Column(db.String(50), nullable=False): It defines a data column of type String with a maximum length of 50 characters, and it cannot be nullable.
+            By dynamically creating the table class, you can adapt your database schema on-the-fly based on the user and table information provided in the URL. Each combination of username and table_name will have its own unique table class and, consequently, its own database table.
+
+        Create the table in the database
+        '''
+        # return f'Table {table_name} created for user {username} with table class {table_class_name}'
+        return render_template("buttons.html", username=username, table_name=table_name, table_created='Table created successfully')
+    
+@app.route('/tables/<username>/load_data')
+def load_data(username):
+    data = all_details()
+    tables = data[-1][data[1].index(username)]
+    return render_template('tables.html', username=username, tables=tables)
+    
+@app.route('/tables/<username>', methods=['GET', 'POST'])
+def load_table(username):
     data = all_details()
     tables = data[-1][data[1].index(username)]
     length = len(tables)
-
     if request.method == 'POST':
-        for i in (length):
+        for i in range(length):
             try:
                 table = request.form[f'{username}_{tables[i]}']
                 return render_template('buttons.html', table=table)
             except:
                 pass
-
-
-@app.route('/create_table', methods=['GET'])
-def create_table(username, table_name):
-    data = all_details()
-    # Check if the username exists in the database
-    if username not in data[1]:
-        return f"User {username} does not exist"
-        return redirect('/signup')
-    else:
-        if table_name in data[3][data[1].index(username)]:
-            return f"Table {table_name} already exists for user {username}"
-            return redirect('/login')
-
-    # Define a dynamic table class for each user and table combination
-    table_class_name = f"{username}_{table_name}"
-    DynamicTable = type(table_class_name, (db.Model,), {
-        'id': db.Column(db.Integer, primary_key=True),
-        'data': db.Column(db.String(50), nullable=False)
-    })
-    '''
-    Dynamic Allocation of Database Tables explaained:
-    - table_class_name: It's a string that combines username and table_name to create a unique identifier for the table class. This ensures that each user and table combination has a distinct table class name.
-    - DynamicTable: This is the dynamically created table class. It uses the type() function to create a new class with the given name (table_class_name). The parameters for type() are:
-    - table_class_name: The name of the new class.
-    - (db.Model,): A tuple of base classes for the new class. In this case, it inherits from db.Model, which is the base class for SQLAlchemy models.
-        The third argument is a dictionary that defines the attributes of the class. In this case:
-        'id': db.Column(db.Integer, primary_key=True): It defines an id column of type Integer, which serves as the primary key for the table.
-        'data': db.Column(db.String(50), nullable=False): It defines a data column of type String with a maximum length of 50 characters, and it cannot be nullable.
-        By dynamically creating the table class, you can adapt your database schema on-the-fly based on the user and table information provided in the URL. Each combination of username and table_name will have its own unique table class and, consequently, its own database table.
-
-    Create the table in the database
-    '''
-    return f'Table {table_name} created for user {username} with table class {table_class_name}'
 
 if __name__ == '__main__':
     app.run(debug=True)

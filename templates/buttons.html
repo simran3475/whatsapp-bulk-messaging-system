@@ -4,6 +4,10 @@
   <link rel="stylesheet" href="../static/css/style.css">
 {% endblock script %}
 
+{% if table_creted %}
+  <script> alert("{{table_creted}}"); </script>  
+{% endif %}
+
 {% block body %}
   <div style="align-items: center;">
     <div class="container centering saying" id="menu_section">
@@ -67,7 +71,7 @@
               </div>
               <div class="flip-card-back">
                 <h3 class="bottom">Send form to more people to get more entries</h3>
-                <a href="/tables/{{username}}">Your Tables</a>
+                <a href="/tables/{{username}}/load_data">Your Tables</a>
                 <a href="/upload/{{username}}/send_data">Upload File</a> </br> </br> </br>
                 <a href="/{{username}}">Create Form</a>
               </div>

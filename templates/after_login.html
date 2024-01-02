@@ -9,24 +9,6 @@
             display: none;
         }
 	</style>
-	
-	<script>
-		window.onload = function () {
-			const signUpButton = document.getElementById('signUp');
-			const signInButton = document.getElementById('signIn');
-			const container = document.getElementById('container');
-			if (signUpButton) {
-				signUpButton.addEventListener('click', () => {
-					container.classList.add("right-panel-active");
-				});
-			}
-			if (signInButton) {
-				signInButton.addEventListener('click', () => {
-					container.classList.remove("right-panel-active");
-				});
-			}
-		}
-		</script>
 {% endblock script %}
 
 {% block body %}
@@ -37,11 +19,6 @@
 		<img src="../static/resources/loading-gif.webp" alt="LOGO">
 	</div>
 </div>
-
-{% if error %}
-	<script> alert("{{error}}"); </script>
-{% endif %}
-
 
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
@@ -77,9 +54,36 @@
 		<script>
 			var button = document.getElementById('clickclcl');
 			button.addEventListener('click', function () {
-                window.location.href = '/tables/{{username}}';
+				window.location.href = '/tables/{{username}}';
 			});
 		</script>
-	{% endif %} -->
-</div>
-{% endblock body %}
+		{% endif %} -->
+	</div>
+	
+	<script>
+		window.onload = function () {
+			const signUpButton = document.getElementById('signUp');
+			const signInButton = document.getElementById('signIn');
+			const container = document.getElementById('container');
+			if (signUpButton) {
+				signUpButton.addEventListener('click', () => {
+					container.classList.add("right-panel-active");
+				});
+			}
+			if (signInButton) {
+				signInButton.addEventListener('click', () => {
+					container.classList.remove("right-panel-active");
+				});
+			}
+		}
+	</script>
+
+	{% if error %}
+		<script> alert("{{error}}"); </script>
+	{% endif %}
+	
+	{% if table_exists %}
+		<script> alert("{{table_exists}}. Try a new table name"); </script>
+	{% endif %}
+
+	{% endblock body %}
