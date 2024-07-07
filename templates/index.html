@@ -1,27 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}{% endblock title %}
-{% block script %}
+{% block css %}
 <styles>
-	<link rel="stylesheet" href="../static/css/index_style.css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/index_style.css') }}">
 </styles>
-<script>
-	window.onload = function () {
-		const signUpButton = document.getElementById('signUp');
-		const signInButton = document.getElementById('signIn');
-		const container = document.getElementById('container');
-		if (signUpButton) {
-			signUpButton.addEventListener('click', () => {
-				container.classList.add("right-panel-active");
-			});
-		}
-		if (signInButton) {
-			signInButton.addEventListener('click', () => {
-				container.classList.remove("right-panel-active");
-			});
-		}
-	}
-</script>
-{% endblock script %}
+{% endblock css %}
 
 {% block body %}
 <h2>Welcome to Whatsapp Bulk Messaging Services</h2>
@@ -75,3 +58,23 @@
 	</div>
 </div>
 {% endblock body %}
+
+{% block script %}
+<script>
+	window.onload = function () {
+		const signUpButton = document.getElementById('signUp');
+		const signInButton = document.getElementById('signIn');
+		const container = document.getElementById('container');
+		if (signUpButton) {
+			signUpButton.addEventListener('click', () => {
+				container.classList.add("right-panel-active");
+			});
+		}
+		if (signInButton) {
+			signInButton.addEventListener('click', () => {
+				container.classList.remove("right-panel-active");
+			});
+		}
+	}
+</script>
+{% endblock script %}

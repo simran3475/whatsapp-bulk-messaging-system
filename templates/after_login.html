@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}{% endblock title %}
-{% block script %}
-	<link rel="stylesheet" href="../static/css/login.css">
-	<link rel="stylesheet" href="../static/css/style copy.css">
+{% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style copy.css') }}">
 	
 	<style>
 		.invisible-button {
             display: none;
         }
 	</style>
-{% endblock script %}
+{% endblock css %}
 
 {% block body %}
 <h2>The Process Begins!</h2>
@@ -86,4 +86,4 @@
 		<script> alert("{{table_exists}}. Try a new table name"); </script>
 	{% endif %}
 
-	{% endblock body %}
+{% endblock body %}

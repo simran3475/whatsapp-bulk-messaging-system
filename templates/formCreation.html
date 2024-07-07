@@ -10,19 +10,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
 
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
-  <script src="../static/scripts/alert.js"></script>
-
+  
   <style>
     body {
       padding: 15vh 15vw;
     }
-
+    
     @media (max-width: 400px) {
       body {
         padding: 5vh 5vw;
       }
     }
-  </style>
+    </style>
 </head>
 
 <body>
@@ -39,8 +38,8 @@
       </span>
       <div class="error-text">Your name is required</div>
     </div>
-
-
+    
+    
     
     <div id="github" class="form-input-group">
       <label for="github-input">Residence</label>
@@ -86,7 +85,7 @@
       </span>
       <div class="error-text">Age should be a number</div>
     </div>
-
+    
     <!-- <div id="morality" class="form-input-group">
       <label for="morality-input">Year of Graduation</label>
       <div class="option-group">
@@ -95,9 +94,9 @@
         <input type="radio" name="morality" id="morality-evil" value="evil">
         <label for="morality-evil">2026</label>
       </div>
-
+      
     </div>
-
+    
     <div id="languages" class="form-input-group">
       <label for="languages-input">Which community would you like to join?</label>
       <div class="option-group">
@@ -112,49 +111,16 @@
       </div>
       <div class="error-text">Choose at least one community</div>
     </div>
-
+    
     <div id="submit" class="form-input-group">
       <button type="submit">Submit</button>
     </div> -->
-
+    
     <!-- This Part is for Script---------------------------------  -->
-  <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-  <script type="module">
-    import { init, validateOn, required } from "../static/scripts/forms.js"
-    init()
-
-    const validate = validateOn("change", "keyup")
-
-    const requiredFields = ["name", "gender", "morality", "languages"]
-    requiredFields.map(data => validate(data, required(`${data.charAt(0).toUpperCase() + data.slice(1)} is required`)))
-
-    // validate("age", required("Age is required"), async value => {
-    //   if (Number.isNaN(Number(value))) {
-    //     throw new Error("Age should be a number")
-    //   }
-    // })
-
-    validate("mobile", required("Phone No. is required"), async value => {
-      if (Number.isNaN(Number(value))) {
-        throw new Error("Mobile should contain number")
-      }
-    })
-
-    validate("email", async value => {
-      const mailformat = /^[A-Za-z\d\.]+\@[A-Za-z]+\.[a-z]{2,3}$/
-      if (!mailformat.test(value)) {
-        throw new Error("Please enter a valid email")
-      }
-    })
-
-    // validate("github", required("Github User Profile Link is required"), async value => {
-    //   const githubformat = /^[a-zA-Z0-9_-]+$/
-    //   if (!githubformat.test(value)) {
-    //     throw new Error("Please enter a valid address.")
-    //   }
-    // })
-  </script>
+  <script src="{{ url_for('static', filename='scripts/alert.js') }}"></script>
+  <script type="module" src="{{ {{ url_for('static', filename='scripts/module.js') }} }}"></script>
 </body>
 
 </html>

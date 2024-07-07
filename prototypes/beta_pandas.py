@@ -5,6 +5,11 @@ import time
 
 def send_messages_to_all(df, message):
     for number in df['Phone No.']:
+        print(number)
+        print(type(number))
+        number = "+" + str(number)
+        print(number)
+        print(type(number))
         pywhatkit.sendwhatmsg_instantly(number, message)
 
 def schedule_message(df, message, time_hour, time_minute):
@@ -20,7 +25,7 @@ def filter_and_send(df, message, filter_criteria):
         pywhatkit.sendwhatmsg_instantly(number, message)
 
 # Example usage:
-file_path = "../contacts.csv"
+file_path = "/Users/taf/Projects/Whatsapp Bulk Messaging /contacts.csv"
 message = "Hello from the WhatsApp Messaging System!"
 time_hour = 10
 time_minute = 30
@@ -39,6 +44,6 @@ send_messages_to_all(df, message)
 # filter_and_send(df, message, lambda row: row['Column_Name'] == "Filter_Criteria")  # Example filter
 
 # Keep the program running for scheduled tasks
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)

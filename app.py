@@ -1,14 +1,10 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.attributes import flag_modified
 from datetime import datetime
 from werkzeug.utils import secure_filename
 
-import cli_functions as cli
-
 import os
-
-# users_and_tables = {} # {"username": [table1, table2, table3]}
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///database.db"
