@@ -119,8 +119,50 @@
     <!-- This Part is for Script---------------------------------  -->
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-  <script src="{{ url_for('static', filename='scripts/alert.js') }}"></script>
-  <script type="module" src="{{ {{ url_for('static', filename='scripts/module.js') }} }}"></script>
+  <script >
+    export const showAlert = (value) => {
+    document.body.classList.add("alert")
+    const pre = document.body.querySelector("#overlay pre")
+	
+	// lord forgive me for using innerHTML, but im too bored
+	// FIXME: don't use innerHTML here
+	// FIXME: this span shouldn't be set in js, but if you use .innerText the span will be removed from the html. find a better way of doing this.
+	pre.innerHTML =
+window.alert(
+  <span id="alert">"${value}"</span>
+);<span id="blink"></span>
+}
+  </script>
+  <!-- src="{{ url_for('static', filename='scripts/alert.js') }}"></script> -->
+  <script type="module" >
+    init()
+
+    const validate = validateOn("change", "keyup")
+
+    const requiredFields = ["name", "gender", "morality", "languages"]
+    requiredFields.map(data => validate(data, required(`${data.charAt(0).toUpperCase() + data.slice(1)} is required`)))
+
+    // validate("age", required("Age is required"), async value => {
+    //   if (Number.isNaN(Number(value))) {
+    //     throw new Error("Age should be a number")
+    //   }
+    // })
+
+    validate("mobile", required("Phone No. is required"), async value => {
+      if (Number.isNaN(Number(value))) {
+        throw new Error("Mobile should contain number")
+      }
+    })
+
+    validate("email", async value => {
+      const mailformat = /^[A-Za-z\d\.]+\@[A-Za-z]+\.[a-z]{2,3}$/
+      if (!mailformat.test(value)) {
+        throw new Error("Please enter a valid email")
+      }
+})
+  </script>
+  <!-- src="{{ {{ url_for('static', filename='scripts/module.js') }} }}" -->
+  <!-- ></script> -->
 </body>
 
 </html>
